@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- include summernote css/js -->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <nav>
+        <header class="navigator animated bounce bg-dark" style="visibility: hidden">
+            <div class="login-and-register">
+                <input type="button" data-toggle="modal" data-target="#registerModal"
+                    class="btn btn-default btn-sm  btn-primary" value="注册">
+                <input type="button" data-toggle="modal" data-target="#loginModal"
+                    class="btn btn-default ml-3 btn-sm  btn-primary" value="登陆">
+            </div>
+            <div class="username-and-logout">
+                <strong class="nav-username hide"><a class="" href=""></a></strong>
+                <img style="width:50px; height: 50px; position: relative;border-radius:50%" alt=""
+                    class="nav-avatar ml-3">
+                <input type="button" data-toggle="modal" class="btn btn-sm btn-default btn-danger ml-3 logout-btn"
+                    value="退出">
+                <input type="button" data-toggle="modal"
+                    class="btn btn-sm btn-default btn-primary ml-3 write-article-btn" data-target="#ArticleModal"
+                    value="发布文章">
+                <input type="button" class="btn btn-sm btn-default btn-primary ml-3 back-to-index" value="返回主页">
+            </div>
+            <!-- <div class="search-wrapper">
+                <input type="text" placeholder="搜索文章" class="form-control">
+            </div> -->
+        </header>
+    </nav>
+
+    <!-- {
+    "_id" : ObjectId("5ce9073c0bc9881f54d70a49"),
+    "user" : "999",
+    "pass" : "$2b$10$JPSN8VT8EzYCHxqKqOEt1OPCT1JB6IEwqg47ci5GM0hcFkJdGqrjK",
+    "email" : "999@999.com",
+    "username" : "999",
+    "wechat" : "999",
+    "birthdate" : "用户未填写",
+    "realname" : "99",
+    "gender" : "male",
+    "identity" : "admin",
+    "avatar" : "avatar\\75d72dae9f78f2272ddc784314f9ed59.jpg",
+    "date" : ISODate("2019-05-25T09:13:32.052Z"),
+    "__v" : 0
+    } -->
+
+    <section class="container user-info-container">
+        <div class="client-info">
+            <div class="avatar">
+                <img src="http://ku.90sjimg.com/element_origin_min_pic/01/56/69/585747cfd354024.jpg" alt="">
+                <div class="user">lyz</div>
+                <div class="identity">站内身份：管理员</div>
+            </div>
+            <div class="info-detail">
+                <div class="base-info">
+                    <div class="birthdate">出生日期：1994-05-31</div>
+                    <div class="gender">性别：男</div>
+                    <div class="realname">真实姓名：李沅哲</div>
+                    <div>注册日期：1994-05-34</div>
+                </div>
+                <div class="social-info">
+                    <div class="email">邮箱：1074532632@qq.com</div>
+                    <div class="wechat">微信：lebre-li</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- 留言板 -->
+    <section class="container comment-container">
+        <strong class="user-comment-title">留言板：</strong>
+        <div class="comments">
+
+            <!-- <div class="commentary-item">
+                <div class="commentary-user">
+                    <img src="http://ku.90sjimg.com/element_origin_min_pic/01/56/69/585747cfd354024.jpg" alt="">
+                    <div class="commentary-username">李沅哲</div>
+                    <div class="commentary-datae">2019年5月26日</div>
+                </div>
+                <div class="conmentary-content">
+                    一、为什么HTML5要引入新语义标签
+                    在HTML5出现之前，我们一般采用DIV+CSS布局我们的页面。但是这样的布局方式不仅使我们的文档结构不够清晰，而且不利于搜索引擎爬虫对我们页面的爬取。为了解决上述缺点，HTML5新增了很多新的语义化标签。
+                </div>
+            </div> -->
+
+        </div>
+        <div class="editor-comments">
+            <!-- 评论区 -->
+            <div id="summernote-comments"></div>
+            <div class="btn-default btn btn-primary mt-3 publish-comments-to-user">发表评论</div>
+        </div>
+    </section>
+
+
+
+    <!-- 模态框 -->
+    <!-- 注册区域 -->
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">注册</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="register-form">
+
+                        <div class="form-group input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">用户名*</span>
+                            </div>
+                            <input type="text" class="form-control input-required" aria-label="Default"
+                                id="user-for-register" aria-describedby="inputGroup-sizing-default"
+                                placeholder="请输入用户名">
+                        </div>
+
+                        <div class="form-group input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">密码*</span>
+                            </div>
+                            <input type="password" class="form-control input-required" aria-label="Default"
+                                id="pass-for-register" aria-describedby="inputGroup-sizing-default">
+                        </div>
+
+                        <div class="form-group input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">确认密码*</span>
+                            </div>
+                            <input type="password" class="form-control input-required" aria-label="Default"
+                                id="checkpass" aria-describedby="inputGroup-sizing-default">
+                        </div>
+
+                        <div class="form-group input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">邮箱*</span>
+                            </div>
+                            <input type="text" class="form-control input-required" aria-label="Default" id="email"
+                                aria-describedby="inputGroup-sizing-default">
+                        </div>
+
+                        <div class="form-group input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">昵称*</span>
+                            </div>
+                            <input type="text" class="form-control input-required" aria-label="Default" id="username"
+                                aria-describedby="inputGroup-sizing-default">
+                        </div>
+
+                        <div class="form-group input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">微信</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Default" id="wechat"
+                                aria-describedby="inputGroup-sizing-default">
+                        </div>
+
+                        <div class="form-group input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">出生日期</span>
+                            </div>
+                            <input type="date" class="form-control" aria-label="Default" id="birthdate"
+                                aria-describedby="inputGroup-sizing-default">
+                        </div>
+
+                        <div class="form-group input-group  mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">真实姓名</span>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Default" id="realname"
+                                aria-describedby="inputGroup-sizing-default">
+                        </div>
+
+                        <div class="form-group input-group">
+                            <label>性别*：&nbsp;&nbsp;</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input gender" checked type="radio" name="sex-for-register"
+                                    id="inlineRadio1" value="male">
+                                <label class="form-check-label" for="inlineRadio1">男</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input gender" type="radio" name="sex-for-register"
+                                    id="inlineRadio2" value="female">
+                                <label class="form-check-label" for="inlineRadio2">女</label>
+                            </div>
+                        </div>
+                        <div class="form-group input-group">
+                            <label>身份*：&nbsp;&nbsp;</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input identity" disabled type="radio"
+                                    name="identity-for-register" id="identity-for-register-admin" value="admin">
+                                <label class="form-check-label" for="inlineRadio1">管理员</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input identity" checked type="radio"
+                                    name="identity-for-register" id="identity-for-register-client" value="client">
+                                <label class="form-check-label" for="inlineRadio2">游客</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group input-group ">
+                            <label>头像*&nbsp;&nbsp;</label>
+                            <input type="file" class="form-control input-required" id="avatar">
+                        </div>
+                        <div class="text-right">
+                            <input type="button" value="注册" class="btn btn-default btn-primary mr-2 register-btn ">
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 登陆区域 -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">登陆</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="login-form">
+                        <div class="form-group">
+                            <label>邮箱&nbsp;&nbsp;</label>
+                            <input type="text" class="form-control input-required" id="email-for-login">
+                        </div>
+                        <div class="form-group ">
+                            <label>密码&nbsp;&nbsp;</label>
+                            <input type="password" class="form-control input-required" id="pass-for-login">
+                        </div>
+                        <div class="text-right">
+
+                            <input type="button" value="登陆" class="btn btn-default btn-primary login-btn">
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 文章发布区域 -->
+    <div class="modal fade" id="ArticleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog-article" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ArticleModalLabel">发布文章</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" class="article-form">
+                        <div class="form-group">
+                            <label>标题&nbsp;&nbsp;</label>
+                            <input type="text" placeholder="暂时只有管理员可以发表文章" class="form-control input-required"
+                                id="article-title">
+                        </div>
+                        <div class="form-group ">
+                            <label>内容&nbsp;&nbsp;</label>
+                            <div id="summernote">暂时只有管理员可以发表文章</div>
+                        </div>
+                        <div class="text-right">
+                            <input type="button" value="发布文章" class="btn btn-default btn-primary publish-btn">
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="bg-dark text-dark mt-5 p-4 text-center">
+        <p>Copyright &copy; 2019 李沅哲</p>
+        <p>一名有理想的前端 + node开发工程师</p>
+        <div class="row">
+            <div class="col-md-4">tel: <a target="_blank" href="tel:13704378190">13704378190</a></div>
+            <div class="col-md-4">掘金: <a target="_blank"
+                    href="https://juejin.im/user/5cc9848b6fb9a0321a1509ce">liyuanzhe-cn</a></div>
+            <div class="col-md-4">github: <a target="_blank" href="https://github.com/liyuanzhe-cn">liyuanzhe-cn</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 消息提示区域 -->
+    <!-- 注册成功 -->
+    <div class="alert alert-danger fade registion-success  text-center" data-dismiss="alert"
+        style="position:fixed;z-index:1000000;left:50%;transform:translate(-50%)" role="alert">注册成功</div>
+    <!-- 邮箱已被注册 -->
+    <div class="alert alert-danger fade email-was-registed text-center" data-dismiss="alert"
+        style="position:fixed;z-index:1000000;left:50%;transform:translate(-50%)" role="alert">email已被注册</div>
+    <!-- 邮箱书写不合法 -->
+    <div class="alert alert-danger fade email-ilegal text-center" data-dismiss="alert"
+        style="position:fixed;z-index:1000000;left:50%;transform:translate(-50%)" role="alert">email未输入或不合法</div>
+    <!-- 两次密码不一致 -->
+    <div class="alert alert-danger fade pass-not-equal-to-checkpass text-center" data-dismiss="alert"
+        style="position:fixed;z-index:1000000;left:50%;transform:translate(-50%)" role="alert">两次密码不一致</div>
+    <!-- 用户名或者密码错误 -->
+    <div class="alert alert-danger fade pass-or-email-wrong text-center" data-dismiss="alert"
+        style="position:fixed;z-index:1000000;left:50%;transform:translate(-50%)" role="alert">用户名或者密码错误</div>
+
+    <!-- 登陆成功 -->
+    <div class="alert alert-danger fade login-success text-center" data-dismiss="alert"
+        style="position:fixed;z-index:1000000;left:50%;transform:translate(-50%)" role="alert">登陆成功</div>
+
+    <!-- 登陆成功 -->
+    <div class="alert alert-danger fade compress-avatar text-center" data-dismiss="alert"
+        style="position:fixed;z-index:1000000;left:50%;transform:translate(-50%)" role="alert">正在压缩图片到100k以内</div>
+
+
+
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+    <script>
+        // $('#summernote').summernote({
+        //     height: 250,
+        //     
+        // });
+        $("#summernote").summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+            ],
+            popover: {
+                image: [],
+                link: [],
+                air: []
+            }
+        });
+
+        $("#summernote-comments").summernote({
+            height: 200,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+            ],
+            popover: {
+                image: [],
+                link: [],
+                air: []
+            }
+        });
+    </script>
+    <!-- 轮播图 -->
+
+
+</body>
+
+</html>

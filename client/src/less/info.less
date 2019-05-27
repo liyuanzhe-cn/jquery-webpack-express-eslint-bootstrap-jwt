@@ -1,0 +1,218 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a,
+p,
+span {
+    text-decoration: none;
+}
+
+body {
+    padding: 0 !important;
+    background-color: #252525;
+    width: 100%;
+
+    /*导航栏*/
+    .navigator {
+        display: flex;
+        align-items: center;
+        height: 60px;
+        // background-image: radial-gradient(#999999, #777777);
+        width: 100%;
+        box-shadow: #100000 px 0px 5px 5px;
+
+        .login-and-register,
+        .username-and-logout,
+        .search-wrapper {
+            // display: inline-block;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        img:hover {
+            transition: all 60s ease;
+            transform: rotate(66turn);
+        }
+
+        .search-wrapper {
+            align-content: center;
+            height: 38px;
+
+            input {
+                width: 200px;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+
+            .login-and-register,
+            .username-and-logout {
+                width: 70%;
+            }
+
+            .search-wrapper {
+                // display: inline-block;
+                width: 30%;
+            }
+
+            .search-wrapper {
+                align-content: center;
+                height: 38px;
+
+                input {
+                    width: 100px;
+                }
+            }
+        }
+
+        .nav-username {
+            color: #fff;
+
+            a {
+                color: #fff;
+            }
+        }
+    }
+
+    /*模态框*/
+    .modal-dialog {
+        .input-group-text {
+            width: 100px;
+        }
+    }
+
+    /*写文章*/
+    .modal-dialog-article {
+        // overflow: hidden;
+        width: 80%;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 30px auto;
+
+        .modal-content {
+            width: 100%;
+            position: absolute;
+            margin: 30px auto;
+        }
+    }
+
+    /*用户信息展示区域*/
+    /*
+    <div class="client-info">
+            <div class="avatar">
+                <img src="http://ku.90sjimg.com/element_origin_min_pic/01/56/69/585747cfd354024.jpg" alt="">
+                <div class="identity">管理员</div>
+            </div>
+            <div class="base-info">
+                <div class="user">lyz</div>
+                <div class="birthdate">1994-05-31</div>
+                <div class="gender">男</div>
+                <div class="realname">李沅哲</div>
+
+            </div>
+            <div class="social-info">
+                <div class="email">1074532632@qq.com</div>
+                <div class="wechat">lebre-li</div>
+            </div>
+        </div>
+    */
+    .client-info {
+        width: 100%;
+        color: #fff;
+        background-color: #555;
+        margin: 10px 0;
+        padding: 10px 0;
+
+        .avatar {
+            width: 100%;
+            text-align: center;
+
+            img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+            }
+        }
+
+        .info-detail {
+            display: flex;
+
+            .base-info {
+                flex: 1;
+            }
+
+            .social-info {
+                flex: 1;
+            }
+        }
+    }
+
+    /*提醒框*/
+    .alert {
+        position: absolute;
+        top: 100px;
+    }
+
+    /*评论区*/
+    .comment-container {
+        margin-top: 10px;
+
+        .user-comment-title {
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .commentary-item {
+            margin: 10px auto;
+            display: flex;
+            color: #fff;
+            background-color: #555;
+
+            .commentary-user {
+                width: 12vw;
+                display: block;
+
+                height: 100%;
+                text-align: center;
+                min-height: 120px;
+                font-size: 12px;
+
+                img {
+                    width: 8vw;
+                    height: 8vw;
+                    margin: 1vh auto;
+                    border-radius: 50%;
+                }
+            }
+
+            .conmentary-content {
+                padding: 10px;
+            }
+        }
+
+        .editor-comments {
+            color: black;
+        }
+    }
+
+    footer {
+
+        p,
+        a,
+        div {
+            color: #fff;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+    }
+}
