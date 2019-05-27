@@ -4,6 +4,7 @@ const jwtDecode = require('jwt-decode');
 const { searchToQuery, chineseLocalTime } = require('./utils');
 const { logout, publishArticle, login, register, backToHome, initSummerNoteNav, isLogin, initSummerNoteComments } = require('./common');
 //
+
 (() => {
 
 

@@ -3,6 +3,8 @@ const axios = require('./http');
 const imgCompress = require('./imageCompress');
 const { reLoad, validateEmail } = require('./utils');
 require('summernote');
+
+
 /*
 
     这个是导航条公共部分的js文件
@@ -74,7 +76,7 @@ function isLogin() {
             $('.login-and-register').remove();
             $('#registerModal').remove();
             $('#loginModal').remove();
-            $('.nav-username').find('a').html(username).attr('src', '/info.html?user_id=' + _id);
+            $('.nav-username').find('a').html(username).attr('href', '/info.html?user_id=' + _id);
             $(".nav-avatar").attr('src', '/api/user/avatar/?avatar=' + jwtDecode(localStorage.getItem('lyz-blog-token')).avatar);
 
         }

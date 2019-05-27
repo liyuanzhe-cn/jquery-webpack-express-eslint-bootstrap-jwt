@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- include summernote css/js -->
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/summernote/0.8.12/summernote.css" rel="stylesheet">
 
 </head>
 
@@ -18,6 +18,7 @@
     <nav>
         <header class="navigator animated bounce bg-dark" style="visibility: hidden">
             <div class="login-and-register">
+
                 <input type="button" data-toggle="modal" data-target="#registerModal"
                     class="btn btn-default btn-primary" value="注册">
                 <input type="button" data-toggle="modal" data-target="#loginModal"
@@ -233,6 +234,11 @@
 
                         <div class="form-group input-group ">
                             <label>头像*&nbsp;&nbsp;</label>
+                            <br />
+                            <small>因为是免费hosting，没有文件读取和写入权限，头像只能在localhost写入和读取</small>
+                            <small>本站开发源码下载：<a
+                                    href="https://github.com/liyuanzhe-cn/jquery-webpack-express-eslint-bootstrap-jwt">github：liyuanzhe-cn</a>
+                            </small><br>
                             <input type="file" class="form-control input-required" id="avatar">
                         </div>
                         <div class="text-right">
@@ -259,6 +265,10 @@
                 </div>
                 <div class="modal-body">
                     <form action="" class="login-form">
+                        <small>
+                            <span>公共账号： 123456789@qq.com</span><br />
+                            <span> 密码：123456789 </span>
+                        </small><br />
                         <div class="form-group">
                             <label>邮箱&nbsp;&nbsp;</label>
                             <input type="text" class="form-control input-required" id="email-for-login">
@@ -317,6 +327,9 @@
     <footer class="bg-dark text-dark mt-5 p-4 text-center">
         <p>Copyright &copy; 2019 李沅哲</p>
         <p>一名有理想的前端 + node开发工程师</p>
+        <p>本站开发源码下载：<a
+                href="https://github.com/liyuanzhe-cn/jquery-webpack-express-eslint-bootstrap-jwt">github：liyuanzhe-cn</a>
+        </p>
         <div class="row">
             <div class="col-md-4">tel: <a target="_blank" href="tel:13704378190">13704378190</a></div>
             <div class="col-md-4">掘金: <a target="_blank"
