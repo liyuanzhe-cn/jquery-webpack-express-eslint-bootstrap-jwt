@@ -1,45 +1,22 @@
 require('../less/index.less');
 require('../css/Cooldog.css');
 const axios = require('./http');
-const jwtDecode = require('jwt-decode');
 const picsSlider = require('./picsSlider');
 const { chineseLocalTime } = require('./utils');
-const { logout, publishArticle, login, register } = require('./common');
+const { logout, publishArticle, login, register, initSummerNoteNav, isLogin } = require('./common');
 
 (() => {
-
+    isLogin();
     logout();
     publishArticle();
     login();
     register();
+    initSummerNoteNav();
 
-
-    //立即执行函数， 初始化登陆注册部分
-    + function isLogin() {
-        var token = localStorage.getItem('lyz-blog-token');
-        if (token) {
-            var { exp, username } = jwtDecode(token);
-            var currentTime = new Date().getTime();
-            if (exp * 1000 < currentTime) {
-                localStorage.removeItem('lyz-blog-token');
-            } else {
-                $('.login-and-register').remove();
-                $('#registerModal').remove();
-                $('#loginModal').remove();
-                $('.nav-username').find('a').html(username);
-                $(".nav-avatar").attr('src', 'http://localhost:5000/user/avatar/?avatar=' + jwtDecode(localStorage.getItem('lyz-blog-token')).avatar);
-
-            }
-        } else {
-            $('.username-and-logout').remove();
-        }
-        // 显示导航栏
-        $(".navigator").css('visibility', 'visible');
-    }();
 
     // 获取文章的页面
     (function () {
-        axios.get('/article/get-articles')
+        axios.get('/api/article/get-articles')
             .then((res) => {
                 /**
                     articleContent: "222"

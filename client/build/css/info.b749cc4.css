@@ -145,18 +145,17 @@ body .comment-container .commentary-item {
   background-color: #555;
 }
 body .comment-container .commentary-item .commentary-user {
-  width: 20vw;
+  width: 12vw;
   display: block;
-  border-right: 1px solid #999;
-  border-bottom: 1px solid #999;
   height: 100%;
   text-align: center;
   min-height: 120px;
   font-size: 12px;
 }
 body .comment-container .commentary-item .commentary-user img {
-  width: 15vw;
-  height: 15vw;
+  width: 8vw;
+  height: 8vw;
+  margin: 1vh auto;
   border-radius: 50%;
 }
 body .comment-container .commentary-item .conmentary-content {

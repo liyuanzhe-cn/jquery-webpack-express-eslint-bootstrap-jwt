@@ -2,6 +2,7 @@ const jwtDecode = require('jwt-decode');
 const axios = require('./http');
 const imgCompress = require('./imageCompress');
 const { reLoad, validateEmail } = require('./utils');
+require('summernote');
 /*
 
     这个是导航条公共部分的js文件
@@ -9,6 +10,47 @@ const { reLoad, validateEmail } = require('./utils');
 */
 
 //返回主页
+
+function initSummerNoteNav() {
+    $("#summernote").summernote({
+        height: 300,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ol', 'ul', 'paragraph', 'height']],
+        ],
+        popover: {
+            image: [],
+            link: [],
+            air: []
+        }
+    });
+}
+
+// 初始化输入框
+
+function initSummerNoteComments() {
+    $("#summernote-comments").summernote({
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline']],
+            ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ol', 'ul', 'paragraph', 'height']],
+        ],
+        popover: {
+            image: [],
+            link: [],
+            air: []
+        }
+    });
+}
+
 function backToHome() {
     $('.back-to-index').on({
         click: function () {
@@ -17,6 +59,30 @@ function backToHome() {
         }
     })
 
+}
+
+
+//立即执行函数， 初始化登陆注册部分
+function isLogin() {
+    var token = localStorage.getItem('lyz-blog-token');
+    if (token) {
+        var { exp, username, _id } = jwtDecode(token);
+        var currentTime = new Date().getTime();
+        if (exp * 1000 < currentTime) {
+            localStorage.removeItem('lyz-blog-token');
+        } else {
+            $('.login-and-register').remove();
+            $('#registerModal').remove();
+            $('#loginModal').remove();
+            $('.nav-username').find('a').html(username).attr('src', '/info.html?user_id=' + _id);
+            $(".nav-avatar").attr('src', '/api/user/avatar/?avatar=' + jwtDecode(localStorage.getItem('lyz-blog-token')).avatar);
+
+        }
+    } else {
+        $('.username-and-logout').remove();
+    }
+    // 显示导航栏
+    $(".navigator").css('visibility', 'visible');
 }
 
 
@@ -52,7 +118,7 @@ function publishArticle() {
                     articleContent: markupStr,
                     avatar: avatar
                 }
-                axios.post('/article/publish', articledata)
+                axios.post('/api/article/publish', articledata)
                     .then((res) => {
                         console.log(res);
                         $('#ArticleModal').modal('toggle');
@@ -83,7 +149,7 @@ function login() {
                 formNode.append('pass', $('#pass-for-login').val());
                 formNode.append('email', $('#email-for-login').val());
 
-                axios.post('/user/login', formNode)
+                axios.post('/api/user/login', formNode)
                     .then(res => {
                         //隐藏登陆输入框
                         $('#loginModal').modal('toggle');
@@ -144,7 +210,7 @@ function register() {
                             res();
                         })
                     }).then(() => {
-                        axios.post('/user/register', formNode)
+                        axios.post('/api/user/register', formNode)
                             .then(res => {
                                 console.log(res);
                                 $('#registerModal').modal('toggle');
@@ -214,5 +280,5 @@ function clearLoginModal() {
 }
 
 module.exports = {
-    logout, publishArticle, login, register, backToHome
+    logout, publishArticle, login, register, backToHome, initSummerNoteNav, isLogin, initSummerNoteComments
 }

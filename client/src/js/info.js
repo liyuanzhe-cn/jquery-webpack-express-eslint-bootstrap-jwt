@@ -2,44 +2,30 @@ require('../less/info.less');
 const axios = require('./http');
 const jwtDecode = require('jwt-decode');
 const { searchToQuery, chineseLocalTime } = require('./utils');
-const { logout, publishArticle, login, register, backToHome } = require('./common');
+const { logout, publishArticle, login, register, backToHome, initSummerNoteNav, isLogin, initSummerNoteComments } = require('./common');
 //
 (() => {
+
+
+
     //导航条部分绑定事件
+    isLogin();
     logout();
     publishArticle();
     login();
     register();
     backToHome();
+    initSummerNoteNav();
+    initSummerNoteComments();
 
-    //立即执行函数， 初始化登陆注册部分，登录状态判断
-    +function isLogin() {
-        var token = localStorage.getItem('lyz-blog-token');
-        if (token) {
-            var { exp, username } = jwtDecode(token);
-            var currentTime = new Date().getTime();
-            if (exp * 1000 < currentTime) {
-                localStorage.removeItem('lyz-blog-token');
-            } else {
-                $('.login-and-register').remove();
-                $('#registerModal').remove();
-                $('#loginModal').remove();
-                $('.nav-username').find('a').html(username);
-                $(".nav-avatar").attr('src', 'http://localhost:5000/user/avatar/?avatar=' + jwtDecode(localStorage.getItem('lyz-blog-token')).avatar);
-            }
-        } else {
-            $('.username-and-logout').remove();
-        }
-        // 显示导航栏
-        $(".navigator").css('visibility', 'visible');
-    }();
+
 
 
     // 获取个人信息
     (function () {
         var user_idObj = searchToQuery();
         var user_id = user_idObj.user_id;
-        axios.get('/user/get-user-info/' + user_id)
+        axios.get('/api/user/get-user-info/' + user_id)
             .then((res) => {
                 console.log(res.data);
                 var ele = res.data
@@ -60,7 +46,7 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
                 */
                 var html = `
                 <div class="avatar">
-                    <img src="${'http://localhost:5000/user/avatar/?avatar=' + ele.avatar}" alt="${ele.user}">
+                    <img src="${'/api/user/avatar/?avatar=' + ele.avatar}" alt="${ele.user}">
                     <div class="user">${ele.user}</div>
                     <div class="identity">站内身份：${ele.identity}</div>
                 </div>
@@ -87,7 +73,7 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
     function getComments() {
         var user_idObj = searchToQuery();
         var user_id = user_idObj.user_id;
-        axios.get('/usr-comments/get-allComments/' + user_id)
+        axios.get('/api/usr-comments/get-allComments/' + user_id)
             .then((res) => {
                 console.log(res.data);
                 var ele = res.data
@@ -111,7 +97,7 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
                             <div class="commentary-item">
                                 <div class="commentary-user">
                                     <a href="${'/info.html?user_id=' + ele.publisher_id}">
-                                        <img src="${'http://localhost:5000/user/avatar/?avatar=' + ele.avatar}" alt="${ele.user}">
+                                        <img src="${'/api/user/avatar/?avatar=' + ele.avatar}" alt="${ele.user}">
                                     </a>
                                     <div class="commentary-username">${ele.user}</div>
                                     <div class="commentary-datae">${chineseLocalTime(ele.date)}</div>
@@ -161,7 +147,7 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
                     avatar: avatar,
                     contents: markupStr
                 }
-                axios.post('/usr-comments/publish', articledata)
+                axios.post('/api/usr-comments/publish', articledata)
                     .then((res) => {
                         $('#summernote-comments').next().find('.note-editable').empty();
                         getComments();
@@ -170,7 +156,7 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
                         console.log(err);
                     })
             } else {
-                console.log('状态： 未登录');
+                alert('请先登录');
             }
         }
     })

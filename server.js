@@ -33,10 +33,10 @@ server.use(bodyParser({}));
 server.use(multer({ dest: './avatar' }).any());
 
 //api接口
-server.use('/user', userRouter);
-server.use('/article', articleRouter);
-server.use('/art-comments', articleCommentsRouter);
-server.use('/usr-comments', userCommentsRouter);
+server.use('/api/user', userRouter);
+server.use('/api/article', articleRouter);
+server.use('/api/art-comments', articleCommentsRouter);
+server.use('/api/usr-comments', userCommentsRouter);
 //监听和静态资源
 server.listen(5000);
-server.use('/', express.static('./client/build'))
+server.use( express.static('./client/build'))

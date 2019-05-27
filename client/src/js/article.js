@@ -2,14 +2,20 @@ require('../less/article.less');
 const axios = require('./http');
 const jwtDecode = require('jwt-decode');
 const { searchToQuery, chineseLocalTime } = require('./utils');
-const { logout, publishArticle, login, register, backToHome } = require('./common');
+const { logout, publishArticle, login, register, backToHome, isLogin, initSummerNoteNav, initSummerNoteComments } = require('./common');
 
 (() => {
+    isLogin();
     logout();
     publishArticle();
     login();
     register();
     backToHome();
+    initSummerNoteNav();
+    initSummerNoteComments();
+
+
+
     //立即执行函数， 初始化登陆注册部分
     +function isLogin() {
         var token = localStorage.getItem('lyz-blog-token');
@@ -23,7 +29,7 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
                 $('#registerModal').remove();
                 $('#loginModal').remove();
                 $('.nav-username').find('a').html(username);
-                $(".nav-avatar").attr('src', 'http://localhost:5000/user/avatar/?avatar=' + jwtDecode(localStorage.getItem('lyz-blog-token')).avatar);
+                $(".nav-avatar").attr('src', '/api/user/avatar/?avatar=' + jwtDecode(localStorage.getItem('lyz-blog-token')).avatar);
 
             }
         } else {
@@ -35,7 +41,7 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
 
     // 获取最近的文章
     (function () {
-        axios.get('/article/get-articles')
+        axios.get('/api/article/get-articles')
             .then((res) => {
                 /**
                     articleContent: "222"
@@ -79,14 +85,14 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
         if (window.location.search) {
 
             var urlQuery = searchToQuery(window.location.search);
-            console.log(window.location.search, '/user/get-articles/' + urlQuery._id)
-            axios.get('/article/get-articles/' + urlQuery._id).then((res) => {
+            console.log(window.location.search, '/api/user/get-articles/' + urlQuery._id)
+            axios.get('/api/article/get-articles/' + urlQuery._id).then((res) => {
                 console.log(res.data);
                 var ele = res.data;
                 var chineseDate = chineseLocalTime(ele.date);
                 var articleHtml = `
                         <div class="article-info">
-                            <div class="article-avatar"><img src="${'http://localhost:5000/user/avatar/?avatar=' + ele.avatar}" alt="">
+                            <div class="article-avatar"><img src="${'/api/user/avatar/?avatar=' + ele.avatar}" alt="">
                             </div>
                             <div class="article-author">
                                 <p class="article-author-detail article-author-name">
@@ -122,7 +128,7 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
         var user_idObj = searchToQuery();
         var user_id = user_idObj._id;
         //
-        axios.get('/art-comments/get-articles/' + user_id)
+        axios.get('/api/art-comments/get-articles/' + user_id)
             .then((res) => {
                 console.log(res.data);
                 var ele = res.data
@@ -132,7 +138,7 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
                             <div class="commentary-item">
                                 <div class="commentary-user">
                                     <a href="${'/info.html?user_id=' + ele.publisher_id}">
-                                        <img src="${'http://localhost:5000/user/avatar/?avatar=' + ele.avatar}" alt="${ele.user}">
+                                        <img src="${'/api/user/avatar/?avatar=' + ele.avatar}" alt="${ele.user}">
                                     </a>
                                     <div class="commentary-username">${ele.user}</div>
                                     <div class="commentary-datae">${chineseLocalTime(ele.date)}</div>
@@ -182,7 +188,7 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
                     avatar: avatar,
                     contents: markupStr
                 }
-                axios.post('/art-comments/publish', articledata)
+                axios.post('/api/art-comments/publish', articledata)
                     .then((res) => {
                         $('#summernote-comments').next().find('.note-editable').empty();
                         getComments();
@@ -191,7 +197,7 @@ const { logout, publishArticle, login, register, backToHome } = require('./commo
                         console.log(err);
                     })
             } else {
-                console.log('状态： 未登录');
+                alert('请先登录');
             }
         }
     })

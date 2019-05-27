@@ -21,36 +21,12 @@ module.exports = {
         contentBase: './build', //文件路径
         open: true, //打开浏览器
         proxy: { // 配置跨域
-            '/user': {
-                target: 'http://localhost:5000/user/',
+            '/api': {
+                target: 'http://localhost:5000/api/',
                 ws: true,
                 changOrigin: true,
                 pathRewrite: {
-                    '^/user': ''
-                }
-            },
-            '/article': {
-                target: 'http://localhost:5000/article/',
-                ws: true,
-                changOrigin: true,
-                pathRewrite: {
-                    '^/article': ''
-                }
-            },
-            '/art-comments': {
-                target: 'http://localhost:5000/art-comments/',
-                ws: true,
-                changOrigin: true,
-                pathRewrite: {
-                    '^/art-comments': ''
-                }
-            },
-            '/usr-comments': {
-                target: 'http://localhost:5000/usr-comments/',
-                ws: true,
-                changOrigin: true,
-                pathRewrite: {
-                    '^/usr-comments': ''
+                    '^/api': ''
                 }
             }
         },
@@ -64,7 +40,7 @@ module.exports = {
         filename: '[name].bundle.js', //打包后的文件名,可以加入哈希防止缓存 'bundle.[hash:5].js'
         path: path.resolve(__dirname, 'build'), //路径必须是绝对路径 当前目录下的build文件夹
     },
-    mode: "development",
+    mode: "production",
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
@@ -129,7 +105,7 @@ module.exports = {
                 use: {
                     loader: 'url-loader',
                     options: {
-                        limit: 10 * 1024,
+                        limit: 5 * 1024,
                         //url-loader 如果图片小于1000k会转为base64url，否则用file-loader
                         outputPath: '/image'
                         //生成到这个目录下

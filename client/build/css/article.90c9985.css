@@ -65,6 +65,12 @@ body .navigator .nav-username a {
 body .modal-dialog .input-group-text {
   width: 100px;
 }
+body .text-info-table-row td > a {
+  color: #fff;
+}
+body .text-info-table-row td > a:hover {
+  color: aliceblue;
+}
 body .modal-dialog-article {
   width: 80%;
   position: fixed;
